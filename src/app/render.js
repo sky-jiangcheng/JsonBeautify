@@ -170,7 +170,7 @@
     var items = [];
     for (var i = 0; i < arr.length; i++) {
       items.push(
-        '<div class="list-item" role="button" tabindex="0" aria-label="查看第 ' + i + ' 项" data-list-item="' + i + '">' +
+        '<div class="list-item" role="button" tabindex="0" aria-label="' + _i18n.t('viewItem', { n: i }) + '" data-list-item="' + i + '">' +
         '  <span class="list-item-index">[' + i + ']</span>' +
         '  <span class="list-item-preview">' + _actions.escapeHtml(getItemPreview(arr[i])) + '</span>' +
         '</div>'
@@ -213,7 +213,7 @@
     if (typeof value === 'number') return '<span class="jt-line">' + prefix + '<span class="jt-number">' + value + '</span></span>';
     if (typeof value === 'string') return '<span class="jt-line">' + prefix + '<span class="jt-string">' + esc(JSON.stringify(value)) + '</span></span>';
 
-    var toggleAttrs = 'role="button" tabindex="0" aria-label="折叠/展开" data-jt-toggle="1"';
+    var toggleAttrs = 'role="button" tabindex="0" aria-label="' + _i18n.t('toggleNode') + '" data-jt-toggle="1"';
 
     if (Array.isArray(value)) {
       var count = value.length;
@@ -595,9 +595,9 @@
       return (
         '<div class="history-item ' + selected + '">' +
         '  <input type="checkbox" class="history-checkbox" data-select-id="' + safeId + '" ' + checked + ' title="' + _i18n.t('selectForCompare') + '" aria-label="' + _i18n.t('selectForCompare') + '" />' +
-        '  <button type="button" class="history-info" data-load-id="' + safeId + '" aria-label="加载历史：' + _actions.escapeHtml(name) + '">' +
-        '    <div class="history-name">' + _actions.escapeHtml(name) + '</div>' +
-        '    <div class="history-snippet">' + _actions.escapeHtml(snippet) + '</div>' +
+        '  <button type="button" class="history-info" data-load-id="' + safeId + '" aria-label="' + _actions.escapeHtml(_i18n.t('loadHistoryAria', { name: name })) + '">' +
+        '    <span class="history-name">' + _actions.escapeHtml(name) + '</span>' +
+        '    <span class="history-snippet">' + _actions.escapeHtml(snippet) + '</span>' +
         '  </button>' +
         '  <button type="button" class="history-delete" data-delete-id="' + safeId + '" title="' + _i18n.t('deleteItem') + '" aria-label="' + _i18n.t('deleteItem') + '">&times;</button>' +
         '</div>'
@@ -850,7 +850,7 @@
     var prefix = key !== null ? '<span class="jt-key">' + esc(JSON.stringify(key)) + '</span>: ' : '';
     var diffType = diffMap[path] || '';
     var diffCls = diffType ? ' jt-diff-' + (diffType === 'chg' ? 'changed' : diffType === 'add' ? 'added' : 'removed') : '';
-    var toggleAttrs = 'role="button" tabindex="0" aria-label="折叠/展开" data-jt-toggle="1"';
+    var toggleAttrs = 'role="button" tabindex="0" aria-label="' + _i18n.t('toggleNode') + '" data-jt-toggle="1"';
 
     if (value === null) return '<span class="jt-line' + diffCls + '">' + prefix + '<span class="jt-null">null</span></span>';
     if (typeof value === 'boolean') return '<span class="jt-line' + diffCls + '">' + prefix + '<span class="jt-bool">' + value + '</span></span>';
@@ -947,7 +947,14 @@
     try {
       var raw = localStorage.getItem(SETTINGS_KEY);
       if (!raw) return Object.assign({}, DEFAULT_SETTINGS);
-      return Object.assign({}, DEFAULT_SETTINGS, JSON.parse(raw));
+      var s = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(raw));
+      // bgImageData 会被拼进 CSS url("..."): localStorage 被写入含引号/反斜杠的
+      // 伪造值时会造成 CSS 上下文逃逸, 读取时统一校正为合法的 FileReader data URL
+      if (typeof s.bgImageData !== 'string' || s.bgImageData.indexOf('data:image/') !== 0 ||
+          s.bgImageData.indexOf('"') !== -1 || s.bgImageData.indexOf('\\') !== -1) {
+        s.bgImageData = '';
+      }
+      return s;
     } catch (e) {
       try { localStorage.removeItem(SETTINGS_KEY); } catch (_) {}
       return Object.assign({}, DEFAULT_SETTINGS);
@@ -1882,7 +1889,20 @@
     renderCompareView(items, compareOrder);
   }
 
+  // 两段式确认: 原生 confirm() 在部分 Tauri WebView (WKWebView) 上不可靠,
+  // 用"再点一次确认 + 2.5s 超时"实现, 全平台行为一致
+  var _clearHistoryArmed = false;
+  var _clearHistoryTimer = null;
   function handleClearHistory() {
+    if (!_clearHistoryArmed) {
+      _clearHistoryArmed = true;
+      showToast(_i18n.t('confirmClearHistory'), 2500, 'icon-alert-triangle');
+      clearTimeout(_clearHistoryTimer);
+      _clearHistoryTimer = setTimeout(function () { _clearHistoryArmed = false; }, 2500);
+      return;
+    }
+    clearTimeout(_clearHistoryTimer);
+    _clearHistoryArmed = false;
     var result = _actions.clearAllHistory();
     _actions.setHistory(result.history);
     _store.setState({ selectedIds: result.selectedIds, loadedHistoryId: null });
@@ -1999,6 +2019,11 @@
     toggleSidebar: toggleSidebar,
     switchMobileTab: switchMobileTab,
     toggleMobileMore: toggleMobileMore,
+    // History & JSON tree (app.js 向后兼容 globals 引用这些, 缺导出会被赋成 undefined)
+    renderHistory: renderHistory,
+    toggleJsonNode: toggleJsonNode,
+    toggleListPanel: toggleListPanel,
+    selectListItem: selectListItem,
     // Search
     openSearch: openSearch,
     closeSearch: closeSearch,

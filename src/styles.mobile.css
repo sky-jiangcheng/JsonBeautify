@@ -151,7 +151,11 @@
             background: var(--bg-primary);
             border-top: 1px solid var(--border);
             box-sizing: border-box;
+            /* 长语言(如德语)按钮放不下时横向滑动, 滑动条隐藏保持外观干净 */
+            scrollbar-width: none;
         }
+
+        [data-device="mobile"] .mob-toolbar::-webkit-scrollbar { display: none; }
 
         [data-device="mobile"] .mob-toolbar-scroll {
             display: flex;
@@ -161,7 +165,8 @@
 
         [data-device="mobile"] .mob-btn {
             flex: 1;
-            min-width: 0;
+            /* 不设 min-width:0: 按钮保持文字自然宽度, 放不下时走 .mob-toolbar 横向滑动,
+               避免长语言(德语)下文字被压出按钮边界互相重叠 */
             justify-content: center;
             display: flex;
             align-items: center;
@@ -199,7 +204,6 @@
 
         [data-device="mobile"] .mob-btn-primary {
             flex: 1;
-            min-width: 0;
             justify-content: center;
             background: var(--accent-color, #3b82f6);
             color: #fff;
@@ -507,12 +511,10 @@
                 padding: 6px 4px;
                 font-size: clamp(11px, 2.6vw, 13px);
                 gap: 2px;
-                min-width: 0;
             }
             [data-device="mobile"] .mob-btn-primary {
                 padding: 6px 4px;
                 gap: 2px;
-                min-width: 0;
             }}
 
         /* --- Sidebar hidden by default on mobile --- */

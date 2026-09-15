@@ -11,7 +11,7 @@
      Helpers (pure, no DOM)
   ============================================================== */
   function escapeHtml(str) {
-    return str.replace(/[&<>"']/g, function (c) {
+    return String(str).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
@@ -45,7 +45,7 @@
     }
     // 单条超大记录的降级提示：不丢弃数据，但后续调用方可以根据 size 决定 UI 提示
     var sizeBytes = content.length;
-    return { id: id, name: name, content: String(content || ''), _legacy: true, _size: sizeBytes };
+    return { id: id, name: name, content: String(content || ''), _size: sizeBytes };
   }
 
   function getHistory() {
