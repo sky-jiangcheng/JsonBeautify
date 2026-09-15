@@ -175,7 +175,15 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            /* 长语言(如德语/西语)下按钮总宽可能超出窗口: 允许顶栏横向滚动保证尾部按钮可达,
+               zh/en/ja 一屏放得下时无滚动条, 视觉与原先一致。
+               语言下拉菜单挂在 body 层(v1.5.69), 不受此滚动容器裁剪影响。 */
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: thin;
         }
+
+        .toolbar::-webkit-scrollbar { height: 3px; }
 
         .toolbar .sep {
             width: 1px;
@@ -1269,6 +1277,7 @@
         }
 
         .history-name {
+            display: block;
             font-size: 12px;
             font-weight: 500;
             color: var(--text-primary);
@@ -1278,6 +1287,7 @@
         }
 
         .history-snippet {
+            display: block;
             font-size: 11px;
             color: var(--text-muted);
             white-space: nowrap;
@@ -1323,6 +1333,8 @@
 
         .compare-actions {
             display: flex;
+            /* 保险: 长语言按钮行放不下时换行, 保证按钮完整可点 */
+            flex-wrap: wrap;
             gap: 6px;
         }
 
@@ -1395,6 +1407,8 @@
 
         .modal-actions {
             display: flex;
+            /* 保险: 长语言按钮行放不下时换行, 保证按钮完整可点 */
+            flex-wrap: wrap;
             justify-content: flex-end;
             gap: 8px;
             margin-top: 18px;
@@ -1595,12 +1609,23 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            /* 长语言(如德语)下允许收缩, 配合子级省略号截断, 避免撑破 24px 状态栏 */
+            min-width: 0;
         }
 
         .statusbar-left { font-family: var(--font-mono); }
 
         #status-msg {
             transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+
+        /* 状态栏文案超宽时省略号截断(如德语快捷键提示), 保证单行不溢出;
+           子项 overflow:hidden 同时使 flex min-width:auto 归零, 让收缩生效 */
+        #status-msg,
+        #status-shortcuts {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         #status-msg.updating {
@@ -1641,9 +1666,7 @@
             .btn .shortcut { display: none; }
             .btn { padding: 4px 8px; font-size: 11px; }
             header { padding: 0 12px; }
-            /* 设备层保持 desktop 的窄窗口 (v1.5.62 起): 顶栏按钮过多时允许
-               横向滚动, 避免尾部按钮 (Escape/设置) 被截断不可达 */
-            header .toolbar { overflow-x: auto; min-width: 0; }
+            /* 顶栏溢出滚动已提升到 .toolbar 基础规则(全宽度生效) */
         }
 
         [data-device="desktop"] .mobile-only { display: none !important; }
@@ -1769,6 +1792,8 @@
 
         .bg-image-row {
             justify-content: flex-start;
+            /* 保险: 长语言按钮行放不下时换行 */
+            flex-wrap: wrap;
         }
 
         .bg-image-row .btn {
