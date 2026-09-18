@@ -67,10 +67,11 @@ async function generateIcons() {
 
     let pipeline = sharp(sourcePath)
       .resize(size, size, { kernel: sharp.kernel.lanczos3 });
-    // iOS 图标必须无 alpha 通道（App Store 90717：large app icon 不允许透明/含
-    // alpha）。源图为 RGBA，flatten 合成到黑底（设计为全出血雅黑背景，视觉无
-    // 变化）并移除 alpha 通道；桌面/PWA 图标维持原样。
-    if (isIosIcon) {
+    // 仅大图标（1024px，AppIcon-512@2x）去 alpha：App Store 90717 要求
+    // large app icon 无 alpha。其余 iOS 图标必须保留 RGBA——tauri.ios.conf.json
+    // 的 bundle.icon 列表经 generate_context! 编译期校验，非 RGBA 直接 panic
+    //（v1.5.72 教训）。1024 已从该列表移除，两端约束互不干扰。
+    if (isIosIcon && size === 1024) {
       pipeline = pipeline.flatten({ background: '#000000' });
     }
     await pipeline
