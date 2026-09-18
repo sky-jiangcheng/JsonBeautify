@@ -1684,7 +1684,7 @@ dependencies = [
 
 [[package]]
 name = "json-formatter"
-version = "1.5.71"
+version = "1.5.72"
 dependencies = [
  "serde",
  "serde_json",

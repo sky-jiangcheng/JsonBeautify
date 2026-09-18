@@ -65,8 +65,15 @@ async function generateIcons() {
       outputPath = path.join(tauriIconsDir, filename);
     }
 
-    await sharp(sourcePath)
-      .resize(size, size, { kernel: sharp.kernel.lanczos3 })
+    let pipeline = sharp(sourcePath)
+      .resize(size, size, { kernel: sharp.kernel.lanczos3 });
+    // iOS 图标必须无 alpha 通道（App Store 90717：large app icon 不允许透明/含
+    // alpha）。源图为 RGBA，flatten 合成到黑底（设计为全出血雅黑背景，视觉无
+    // 变化）并移除 alpha 通道；桌面/PWA 图标维持原样。
+    if (isIosIcon) {
+      pipeline = pipeline.flatten({ background: '#000000' });
+    }
+    await pipeline
       .png({ compressionLevel: 9 })
       .toFile(outputPath);
 

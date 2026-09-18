@@ -565,7 +565,8 @@ jobs:
           # 旧判据"体积>1MB"针对 v1.5.65 亚麻纹理旧图标；v1.5.67 起扁平新图标
           # 1024px 合法体积仅 ~78KB，会被误判（v1.5.70 构建因此误中止）。
           # 新判据：appiconset 必须与自研脚本产物逐字节一致（验证 cp 覆盖链路），
-          # 且为 1024x1024、体积在合理区间。
+          # 且为 1024x1024、体积合理、无 alpha 通道（App Store 90717 拒收含
+          # alpha 的图标，v1.5.71 因此上传失败）。
           S=src-tauri/gen/apple/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
           SRC=src-tauri/icons/ios/AppIcon-512@2x.png
           SIZE=$(stat -f%z "$S")
@@ -578,6 +579,12 @@ jobs:
           echo "AppIcon-512@2x.png dims: $DIMS"
           if [ "$DIMS" != "1024x1024" ]; then
             echo "::error::AppIcon-512@2x.png 尺寸为 ${DIMS:-未知}，应为 1024x1024，中止构建"
+            exit 1
+          fi
+          HAS_ALPHA=$(sips -g hasAlpha "$S" 2>/dev/null | awk '/hasAlpha/{print $2}')
+          echo "AppIcon-512@2x.png hasAlpha: ${HAS_ALPHA:-未知}"
+          if [ "$HAS_ALPHA" = "yes" ]; then
+            echo "::error::AppIcon-512@2x.png 含 alpha 通道，App Store 90717 拒收，中止构建"
             exit 1
           fi
           if ! cmp -s "$S" "$SRC"; then
