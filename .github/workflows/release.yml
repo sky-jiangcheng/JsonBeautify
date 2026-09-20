@@ -648,6 +648,9 @@ jobs:
                   "DEVELOPMENT_TEAM": f'"{team_id}"',
                   "CODE_SIGN_STYLE": "Manual",
                   "CODE_SIGN_IDENTITY": '"iPhone Distribution"',
+                  # 2027 春起 altool 硬性要求 MinimumOSVersion ≥ 15.0（iOS 27
+                  # 时代 iOS 14 占比可忽略），Tauri 模板默认 14.0 会在上传时报警
+                  "IPHONEOS_DEPLOYMENT_TARGET": '"15.0"',
               }
               if profile_name:
                   settings_to_add["PROVISIONING_PROFILE_SPECIFIER"] = f'"{profile_name}"'
@@ -680,6 +683,28 @@ jobs:
           echo ""
           echo "=== After ==="
           grep -E "(DEVELOPMENT_TEAM|CODE_SIGN_STYLE|PROVISIONING_PROFILE|CODE_SIGN_IDENTITY|PRODUCT_BUNDLE_IDENTIFIER)" "$PBXPROJ" | head -30
+
+          # 验证最低部署版本写入成功（altool 901/90068 警告的根治）
+          if grep -q 'IPHONEOS_DEPLOYMENT_TARGET = "15.0"' "$PBXPROJ"; then
+            echo "OK: IPHONEOS_DEPLOYMENT_TARGET = 15.0"
+          else
+            echo "::error::IPHONEOS_DEPLOYMENT_TARGET 未写入 15.0，MinimumOSVersion 仍是模板默认，中止构建"
+            exit 1
+          fi
+
+      # iPhone Duo（2026-10-23 上市，出厂 iOS 27.1）的完全兼容模式（全屏利用
+      # 折叠屏区域）需用 iOS 27.1 SDK 构建——Apple 三档兼容机制的顶档，
+      # iOS 26 SDK 构建的应用只有默认安全区模式。GitHub 镜像提供 Xcode 27.1
+      # 后自动启用；未提供时保持镜像默认，构建不受影响。
+      - name: Select Xcode 27.1 if available (iPhone Duo full-compat SDK)
+        run: |
+          if [ -d "/Applications/Xcode_27.1.app" ]; then
+            sudo xcode-select -s /Applications/Xcode_27.1.app
+            echo "已切换到 Xcode 27.1"
+          else
+            echo "镜像暂无 Xcode 27.1，使用默认 Xcode"
+          fi
+          xcodebuild -version
 
       - name: Create export options plist
         env:
