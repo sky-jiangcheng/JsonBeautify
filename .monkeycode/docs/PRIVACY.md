@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**JSON Beautify Tool** is a local-first JSON formatting tool available on macOS, Windows, iOS, and the web. This policy explains how the app handles your data.
+**JsonNest Tool** is a local-first JSON formatting tool available on macOS, Windows, iOS, and the web. This policy explains how the app handles your data.
 
 ## Data Collection
 
@@ -21,7 +21,7 @@ The app does not collect data from children and is suitable for users of all age
 ## Contact
 
 For privacy-related questions, please open an issue on our GitHub repository:  
-https://github.com/sky-jiangcheng/jsonbeautify/issues
+https://github.com/sky-jiangcheng/jsonnest/issues
 
 ## Changes
 

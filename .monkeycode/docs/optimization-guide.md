@@ -1,6 +1,6 @@
 # Tauri + 静态前端项目优化清单
 
-本文档总结 JSON 格式化工具项目在开发、CI/CD、安全、UI 等方面踩过的坑和最终方案，可直接复用到其他类似项目。
+本文档总结 JsonNest项目在开发、CI/CD、安全、UI 等方面踩过的坑和最终方案，可直接复用到其他类似项目。
 
 ---
 
@@ -215,7 +215,7 @@ git push origin appstore
 **2. 创建 App ID**
 [Apple Developer Account](https://developer.apple.com/account) → Certificates, Identifiers & Profiles → Identifiers → +：
 - 类型：App
-- Bundle ID：`com.jsonbeautify.desktop.appstore`
+- Bundle ID：`com.jsonnest.desktop.appstore`
 
 **3. 创建分发证书**
 Certificates → + → Developer ID Application，用本地 Keychain Access 生成 CSR 上传，下载 `.cer` 安装。
@@ -227,7 +227,7 @@ Profiles → + → App Store，关联 App ID + 证书，下载后放入 `src-tau
 [appstoreconnect.apple.com](https://appstoreconnect.apple.com) → 我的 App → +：
 - 平台：macOS
 - Bundle ID：上面创建的
-- 名称："JSON 格式化工具"
+- 名称："JsonNest"
 
 #### 构建与上传
 
@@ -621,16 +621,16 @@ previousBundleVersion: 1.4.0
 **现象**：iOS archive 失败：
 
 ```
-Provisioning profile "jsonbeautify-ios-appstore" has app ID
-"com.jsonbeautify.desktop.appstore", which does not match the bundle ID
-"com.jsonbeautify.desktop.appstore.ios"
+Provisioning profile "jsonnest-ios-appstore" has app ID
+"com.jsonnest.desktop.appstore", which does not match the bundle ID
+"com.jsonnest.desktop.appstore.ios"
 ```
 
 **根因**：macOS 和 iOS 共用同一个 Apple Developer 账号，但 Bundle ID 必须区分。Bundle ID 改了之后，App Store Distribution Profile 没有同步重新生成。
 
 **方案**：
-- macOS App Store：`com.jsonbeautify.desktop.appstore`
-- iOS App Store：`com.jsonbeautify.desktop.appstore.ios`（加 `.ios` 后缀）
+- macOS App Store：`com.jsonnest.desktop.appstore`
+- iOS App Store：`com.jsonnest.desktop.appstore.ios`（加 `.ios` 后缀）
 - 每改一次 Bundle ID，必须到 Apple Developer 后台重新生成对应的 App Store Distribution Profile，并更新 GitHub Secret `IOS_PROVISIONING_PROFILE`。
 
 ### 7.6 GitHub PAT 权限
@@ -666,7 +666,7 @@ PAT 一旦在对话、日志、截图、commit message 中明文出现，视为�
 
 ```json
 {
-  "identifier": "com.jsonbeautify.desktop.appstore.ios",
+  "identifier": "com.jsonnest.desktop.appstore.ios",
   "bundle": {
     "icon": [
       "icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png",
@@ -901,7 +901,7 @@ name = "app_lib"
 ```bash
 # 将 iPhone Developer 改为 iPhone Distribution
 sed -i '' 's|CODE_SIGN_IDENTITY = "iPhone Developer"|CODE_SIGN_IDENTITY = "iPhone Distribution"|g' \
-  src-tauri/gen/apple/project.json_formatter.xcodeproj/project.pbxproj
+  src-tauri/gen/apple/project.jsonnest.xcodeproj/project.pbxproj
 ```
 
 ### 8.5 Provisioning Profile UUID 注入
@@ -931,8 +931,8 @@ import re, sys
     <string>app-store</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.jsonbeautify.desktop.appstore</key>
-        <string>jsonbeautify-ios-appstore</string>
+        <key>com.jsonnest.desktop.appstore</key>
+        <string>jsonnest-ios-appstore</string>
     </dict>
     <key>teamID</key>
     <string>M3A6LK593A</string>
@@ -949,10 +949,10 @@ import re, sys
     # 修复 archive 中的签名配置
     # ...
     xcodebuild -exportArchive \
-      -archivePath "src-tauri/gen/apple/build/arm64/json_formatter.xcarchive" \
+      -archivePath "src-tauri/gen/apple/build/arm64/jsonnest.xcarchive" \
       -exportPath "src-tauri/gen/apple/build/arm64/export" \
       -exportOptionsPlist "exportOptions.plist" \
-      PROVISIONING_PROFILE="jsonbeautify-ios-appstore"
+      PROVISIONING_PROFILE="jsonnest-ios-appstore"
 ```
 
 ### 8.8 Provisioning Profile 映射到证书
@@ -1079,7 +1079,7 @@ await icon.resize(192, 192).png().toFile('dist/icons/icon-192x192.png');
 ```javascript
 const I18N = {
     zh: {
-        title: 'JSON 格式化工具',
+        title: 'JsonNest',
         format: '格式化',
         formatSuccess: '格式化成功',
         // ...
@@ -1286,10 +1286,10 @@ Safari浏览器打不开该网页，因为已丢失网络连接
 
 ```bash
 curl -sv -H "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15" \
-  "https://sky-jiangcheng.github.io/jsonbeautify/" 2>&1
+  "https://sky-jiangcheng.github.io/jsonnest/" 2>&1
 
 curl -s -o /dev/null -w "HTTP %{http_code}\nSize: %{size_download}\nTime: %{time_total}s\nSSL: %{ssl_verify_result}\n" \
-  "https://sky-jiangcheng.github.io/jsonbeautify/"
+  "https://sky-jiangcheng.github.io/jsonnest/"
 ```
 
 检查清单：
