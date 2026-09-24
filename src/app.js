@@ -54,7 +54,7 @@
   ============================================================== */
   var I18N = {
     zh: {
-      title: 'JSON 格式化工具', logoText: 'JSON 格式化工具', mobTitle: 'JSON工具',
+      title: 'JsonNest', logoText: 'JsonNest', mobTitle: 'JSON工具',
       more: '更多', format: '格式化', minify: '压缩', escape: '转义',
       copy: '复制', download: '下载', downloadFile: '下载文件',
       upload: '上传', save: '保存', openFile: '打开文件',

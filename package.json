@@ -1,7 +1,7 @@
 {
-  "name": "json-formatter",
+  "name": "jsonnest",
   "version": "1.5.69",
-  "description": "JSON 格式化工具 - Tauri 桌面应用",
+  "description": "JsonNest - Tauri 桌面应用",
   "private": true,
   "scripts": {
     "tauri": "tauri",

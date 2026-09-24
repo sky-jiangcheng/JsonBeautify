@@ -1683,19 +1683,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "json-formatter"
-version = "1.5.65"
-dependencies = [
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-clipboard-manager",
- "tauri-plugin-dialog",
- "tauri-plugin-fs",
-]
-
-[[package]]
 name = "json-patch"
 version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1705,6 +1692,19 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "jsonnest"
+version = "1.5.69"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-clipboard-manager",
+ "tauri-plugin-dialog",
+ "tauri-plugin-fs",
 ]
 
 [[package]]
