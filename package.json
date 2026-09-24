@@ -1,6 +1,6 @@
 {
   "name": "jsonnest",
-  "version": "1.5.74",
+  "version": "1.5.75",
   "description": "JsonNest - Tauri 桌面应用",
   "private": true,
   "scripts": {
