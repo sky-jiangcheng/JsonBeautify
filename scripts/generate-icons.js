@@ -65,8 +65,16 @@ async function generateIcons() {
       outputPath = path.join(tauriIconsDir, filename);
     }
 
-    await sharp(sourcePath)
-      .resize(size, size, { kernel: sharp.kernel.lanczos3 })
+    let pipeline = sharp(sourcePath)
+      .resize(size, size, { kernel: sharp.kernel.lanczos3 });
+    // 仅大图标（1024px，AppIcon-512@2x）去 alpha：App Store 90717 要求
+    // large app icon 无 alpha。其余 iOS 图标必须保留 RGBA——tauri.ios.conf.json
+    // 的 bundle.icon 列表经 generate_context! 编译期校验，非 RGBA 直接 panic
+    //（v1.5.72 教训）。1024 已从该列表移除，两端约束互不干扰。
+    if (isIosIcon && size === 1024) {
+      pipeline = pipeline.flatten({ background: '#000000' });
+    }
+    await pipeline
       .png({ compressionLevel: 9 })
       .toFile(outputPath);
 

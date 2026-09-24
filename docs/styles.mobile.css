@@ -151,7 +151,11 @@
             background: var(--bg-primary);
             border-top: 1px solid var(--border);
             box-sizing: border-box;
+            /* 长语言(如德语)按钮放不下时横向滑动, 滑动条隐藏保持外观干净 */
+            scrollbar-width: none;
         }
+
+        [data-device="mobile"] .mob-toolbar::-webkit-scrollbar { display: none; }
 
         [data-device="mobile"] .mob-toolbar-scroll {
             display: flex;
@@ -161,7 +165,8 @@
 
         [data-device="mobile"] .mob-btn {
             flex: 1;
-            min-width: 0;
+            /* 不设 min-width:0: 按钮保持文字自然宽度, 放不下时走 .mob-toolbar 横向滑动,
+               避免长语言(德语)下文字被压出按钮边界互相重叠 */
             justify-content: center;
             display: flex;
             align-items: center;
@@ -199,7 +204,6 @@
 
         [data-device="mobile"] .mob-btn-primary {
             flex: 1;
-            min-width: 0;
             justify-content: center;
             background: var(--accent-color, #3b82f6);
             color: #fff;
@@ -507,12 +511,10 @@
                 padding: 6px 4px;
                 font-size: clamp(11px, 2.6vw, 13px);
                 gap: 2px;
-                min-width: 0;
             }
             [data-device="mobile"] .mob-btn-primary {
                 padding: 6px 4px;
                 gap: 2px;
-                min-width: 0;
             }}
 
         /* --- Sidebar hidden by default on mobile --- */
@@ -842,4 +844,61 @@
         [data-device="mobile"] .settings-modal {
             width: calc(100vw - 32px);
             max-width: 360px;
+        }
+
+        /* --- iPhone Duo 内屏等大画布触屏（≥600px）：双栏并排 ---
+           断点依据：Duo 外屏 466pt（保持 tab 单栏）、内屏 626pt（双栏），
+           现有 iPhone 最大 440pt 不受影响；iPad 等更大触屏一并受益。
+           规则形态与横屏矮屏块一致，但保留标准高度的工具栏/头部，
+           不套用横屏紧凑变量（--toolbar-height 等）。 */
+        @media (min-width: 600px) {
+            [data-device="mobile"] {
+                --editor-direction: row;
+            }
+
+            [data-device="mobile"] .main-layout {
+                overflow: hidden;
+                min-height: 0;
+            }
+
+            [data-device="mobile"] .editor-area {
+                position: static;
+                flex-direction: row;
+                overflow: hidden;
+                touch-action: pan-y;
+            }
+
+            /* 覆盖竖屏 tab 模式的 absolute/transform 面板切换——两栏并排都显示 */
+            [data-device="mobile"] .editor-area .panel-left,
+            [data-device="mobile"] .editor-area .panel-right {
+                position: static;
+                display: flex !important;
+                flex: 1 1 50%;
+                min-width: 220px;
+                max-width: 50%;
+                max-height: none;
+                min-height: 0;
+                transform: none !important;
+                opacity: 1 !important;
+                transition: none !important;
+                touch-action: auto;
+            }
+
+            [data-device="mobile"] .editor-area .panel-left {
+                border-right: 1px solid var(--border) !important;
+                border-bottom: none !important;
+            }
+
+            /* 只允许 textarea 与输出区内部滚动 */
+            [data-device="mobile"] .editor-area #input,
+            [data-device="mobile"] .editor-area .output-content-area,
+            [data-device="mobile"] .editor-area .output-wrap {
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* 双栏无需 tab 切换 */
+            [data-device="mobile"] .mob-tabs {
+                display: none;
+            }
         }

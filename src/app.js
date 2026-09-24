@@ -83,6 +83,7 @@
       listTitle: '列表 ({count})', collapseList: '收起列表', expandList: '展开列表',
       emptyArray: '空数组',
       items: '{count} 项', keys: '{count} 键',
+      viewItem: '查看第 {n} 项', toggleNode: '折叠/展开', loadHistoryAria: '加载历史：{name}',
       loadingFile: '已加载 {name}', saved: '已保存：{name}',
       copied: '已复制到剪贴板', copyFailed: '复制失败，请重试',
       nothingToCopy: '没有可复制的内容',
@@ -92,6 +93,7 @@
       formatSuccess: '格式化成功', minifySuccess: '压缩成功',
       escapeSuccess: 'JSON 转义成功',
       jsonError: 'JSON 格式错误', cleared: '已清空', historyCleared: '历史已清空',
+      confirmClearHistory: '再次点击确认清空所有历史',
       loaded: '已加载：{name}', jsonOnly: '请拖入 .json 文件',
       needFormatFirst: '请先格式化有效的 JSON',
       unnamed: '未命名', noHistory: '暂无历史记录', noHistoryHint: '格式化后保存即可',
@@ -156,6 +158,7 @@
       listTitle: 'List ({count})', collapseList: 'Collapse list', expandList: 'Expand list',
       emptyArray: 'Empty array',
       items: '{count} items', keys: '{count} keys',
+      viewItem: 'View item {n}', toggleNode: 'Collapse or expand', loadHistoryAria: 'Load history: {name}',
       loadingFile: 'Loaded {name}', saved: 'Saved: {name}',
       copied: 'Copied to clipboard', copyFailed: 'Copy failed, please try again',
       nothingToCopy: 'Nothing to copy',
@@ -165,6 +168,7 @@
       formatSuccess: 'Formatted successfully', minifySuccess: 'Minified successfully',
       escapeSuccess: 'JSON escaped successfully',
       jsonError: 'Invalid JSON format', cleared: 'Cleared', historyCleared: 'History cleared',
+      confirmClearHistory: 'Click again to confirm clearing all history',
       loaded: 'Loaded: {name}', jsonOnly: 'Please drop .json files only',
       needFormatFirst: 'Please format valid JSON first',
       unnamed: 'Untitled', noHistory: 'No history yet', noHistoryHint: 'Format and save to see history',
@@ -229,6 +233,7 @@
       listTitle: 'Lista ({count})', collapseList: 'Contraer lista', expandList: 'Expandir lista',
       emptyArray: 'Arreglo vacío',
       items: '{count} elementos', keys: '{count} claves',
+      viewItem: 'Ver elemento {n}', toggleNode: 'Contraer o expandir', loadHistoryAria: 'Cargar historial: {name}',
       loadingFile: 'Cargado {name}', saved: 'Guardado: {name}',
       copied: 'Copiado al portapapeles', copyFailed: 'Error al copiar, inténtalo de nuevo',
       nothingToCopy: 'Nada que copiar',
@@ -238,6 +243,7 @@
       formatSuccess: 'Formateado correctamente', minifySuccess: 'Minimizado correctamente',
       escapeSuccess: 'JSON escapado correctamente',
       jsonError: 'Formato JSON no válido', cleared: 'Limpiado', historyCleared: 'Historial borrado',
+      confirmClearHistory: 'Haz clic de nuevo para confirmar el borrado de todo el historial',
       loaded: 'Cargado: {name}', jsonOnly: 'Suelta solo archivos .json',
       needFormatFirst: 'Formatea primero un JSON válido',
       unnamed: 'Sin título', noHistory: 'Aún no hay historial', noHistoryHint: 'Formatea y guarda para ver el historial',
@@ -302,6 +308,7 @@
       listTitle: 'Liste ({count})', collapseList: 'Liste einklappen', expandList: 'Liste ausklappen',
       emptyArray: 'Leeres Array',
       items: '{count} Elemente', keys: '{count} Schlüssel',
+      viewItem: 'Element {n} anzeigen', toggleNode: 'Ein- oder ausklappen', loadHistoryAria: 'Verlauf laden: {name}',
       loadingFile: '{name} geladen', saved: 'Gespeichert: {name}',
       copied: 'In Zwischenablage kopiert', copyFailed: 'Kopieren fehlgeschlagen, bitte erneut versuchen',
       nothingToCopy: 'Nichts zu kopieren',
@@ -311,6 +318,7 @@
       formatSuccess: 'Erfolgreich formatiert', minifySuccess: 'Erfolgreich minimiert',
       escapeSuccess: 'JSON erfolgreich escapert',
       jsonError: 'Ungültiges JSON-Format', cleared: 'Geleert', historyCleared: 'Verlauf gelöscht',
+      confirmClearHistory: 'Erneut klicken, um das Löschen des gesamten Verlaufs zu bestätigen',
       loaded: 'Geladen: {name}', jsonOnly: 'Bitte nur .json-Dateien ablegen',
       needFormatFirst: 'Bitte zuerst gültiges JSON formatieren',
       unnamed: 'Unbenannt', noHistory: 'Noch kein Verlauf', noHistoryHint: 'Formatieren und speichern, um Verlauf zu sehen',
@@ -375,6 +383,7 @@
       listTitle: 'リスト ({count})', collapseList: 'リストを折りたたむ', expandList: 'リストを展開',
       emptyArray: '空の配列',
       items: '{count} 項目', keys: '{count} キー',
+      viewItem: '項目 {n} を表示', toggleNode: '折りたたみ/展開', loadHistoryAria: '履歴を読み込む: {name}',
       loadingFile: '{name} を読み込みました', saved: '保存しました: {name}',
       copied: 'クリップボードにコピーしました', copyFailed: 'コピーに失敗しました。もう一度お試しください',
       nothingToCopy: 'コピーするものがありません',
@@ -384,6 +393,7 @@
       formatSuccess: '整形しました', minifySuccess: '最小化しました',
       escapeSuccess: 'JSONをエスケープしました',
       jsonError: 'JSON形式が無効です', cleared: 'クリアしました', historyCleared: '履歴を削除しました',
+      confirmClearHistory: 'もう一度クリックするとすべての履歴を削除します',
       loaded: '読み込みました: {name}', jsonOnly: '.jsonファイルのみドロップしてください',
       needFormatFirst: 'まず有効なJSONを整形してください',
       unnamed: '名称未設定', noHistory: '履歴はまだありません', noHistoryHint: '整形して保存すると履歴が表示されます',
@@ -464,6 +474,11 @@
   // 让 store 内部 lang 与检测到的语言一致(避免与 i18n._lang 不同步)
   if (window.__store) window.__store.setState({ lang: i18n._lang });
   window.i18n = i18n;
+
+  // fallback toast: render.showToast 缺失时直接写 innerHTML, msg 必须先转义
+  function escToast(msg) {
+    return (window.__actions && window.__actions.escapeHtml) ? window.__actions.escapeHtml(msg) : String(msg);
+  }
 
   function applyAllTranslations() {
     document.title = i18n.t('title');
@@ -593,15 +608,12 @@
               input.dispatchEvent(new Event('input'));
             }
             if (render.formatFromInput) render.formatFromInput();
-            if (typeof render.handleCopy === 'function') {
-              // show loaded toast via render's showToast
-            }
             var toast = document.getElementById('toast');
             if (toast) {
               // 用 render.showToast 展示(内部对 msg 做 escapeHtml, 防文件名的 XSS)
               if (render.showToast) render.showToast(i18n.t('loaded', { name: file.name }), 2000, 'icon-folder-open');
               else {
-                toast.innerHTML = '<svg aria-hidden="true" class="svg-icon-sm" viewBox="0 0 24 24"><use href="#icon-folder-open"/></svg>' + i18n.t('loaded', { name: file.name });
+                toast.innerHTML = '<svg aria-hidden="true" class="svg-icon-sm" viewBox="0 0 24 24"><use href="#icon-folder-open"/></svg>' + escToast(i18n.t('loaded', { name: file.name }));
                 toast.classList.add('show');
                 setTimeout(function () { toast.classList.remove('show'); }, 2000);
               }
@@ -724,7 +736,7 @@
           // 用 render.showToast 展示(内部 escapeHtml, 防历史名 XSS)
           if (render.showToast) render.showToast(i18n.t('loaded', { name: item.name }), 2000, 'icon-file-text');
           else {
-            toast.innerHTML = '<svg aria-hidden="true" class="svg-icon-sm" viewBox="0 0 24 24"><use href="#icon-file-text"/></svg>' + i18n.t('loaded', { name: item.name });
+            toast.innerHTML = '<svg aria-hidden="true" class="svg-icon-sm" viewBox="0 0 24 24"><use href="#icon-file-text"/></svg>' + escToast(i18n.t('loaded', { name: item.name }));
             toast.classList.add('show');
             setTimeout(function () { toast.classList.remove('show'); }, 2000);
           }
@@ -755,7 +767,13 @@
       prevMatch: render.prevMatch,
     };
     for (var name in globals) {
-      if (globals.hasOwnProperty(name) && typeof window[name] === 'undefined') {
+      if (!globals.hasOwnProperty(name)) continue;
+      // 契约检查: 全局项必须是函数, render 导出缺失时立刻报错而不是静默赋 undefined
+      if (typeof globals[name] !== 'function') {
+        console.error('[app] backward-compat global "' + name + '" is not a function — 检查 window.__render 导出列表是否删掉了对应函数');
+        continue;
+      }
+      if (typeof window[name] === 'undefined') {
         window[name] = globals[name];
       }
     }
@@ -809,7 +827,7 @@
     if (window.__render && window.__render.init) window.__render.init();
 
     applyAllTranslations();
-    if (window.__render && window.__render.handleToggleTheme) {
+    if (window.__render) {
       // Apply persisted theme
       var theme = (window.__store && window.__store.getStateForKey('theme')) || persistedTheme;
       document.documentElement.setAttribute('data-theme', theme);

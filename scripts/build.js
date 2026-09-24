@@ -31,6 +31,7 @@ const SRC_ASSETS = [
     'styles.mobile.css',
     'app.js',
     'head.js',   // 同步设置 data-device 的外部脚本（Tauri CSP 无 unsafe-inline 时也允许）
+    'privacy.html', // 隐私政策页（App Store 元数据引用，Pages 路径 /privacy.html）
 ];
 
 // 源子目录：从 src/app/ 复制到 dist/app/

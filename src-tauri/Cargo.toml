@@ -1,6 +1,6 @@
 [package]
 name = "jsonnest"
-version = "1.5.69"
+version = "1.5.74"
 description = "JsonNest - 支持格式化、压缩、树形视图、对比和历史记录"
 authors = ["sky-jiangcheng"]
 license = "MIT"
