@@ -1286,10 +1286,10 @@ Safari浏览器打不开该网页，因为已丢失网络连接
 
 ```bash
 curl -sv -H "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15" \
-  "https://sky-jiangcheng.github.io/jsonnest/" 2>&1
+  "https://sky-jiangcheng.github.io/JsonNest/" 2>&1
 
 curl -s -o /dev/null -w "HTTP %{http_code}\nSize: %{size_download}\nTime: %{time_total}s\nSSL: %{ssl_verify_result}\n" \
-  "https://sky-jiangcheng.github.io/jsonnest/"
+  "https://sky-jiangcheng.github.io/JsonNest/"
 ```
 
 检查清单：
