@@ -1,7 +1,7 @@
 {
-  "name": "jsonnest",
-  "version": "1.5.75",
-  "description": "JsonNest - Tauri 桌面应用",
+  "name": "jsonmate",
+  "version": "1.5.76",
+  "description": "JsonMate - Tauri 桌面应用",
   "private": true,
   "scripts": {
     "tauri": "tauri",

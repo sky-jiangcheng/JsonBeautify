@@ -1,5 +1,6 @@
 {
-  "identifier": "com.jsonnest.desktop.appstore.ios",
+  "productName": "JsonMate",
+  "identifier": "com.jsonbeautify.desktop.appstore.ios",
   "bundle": {
     "icon": [
       "icons/ios/AppIcon-20x20@1x.png",
@@ -18,5 +19,5 @@
       "icons/ios/AppIcon-83.5x83.5@2x.png"
     ]
   },
-  "version": "1.5.75"
+  "version": "1.5.76"
 }

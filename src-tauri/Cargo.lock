@@ -1695,8 +1695,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "jsonnest"
-version = "1.5.75"
+name = "jsonmate"
+version = "1.5.76"
 dependencies = [
  "serde",
  "serde_json",

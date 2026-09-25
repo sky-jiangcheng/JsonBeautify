@@ -1,6 +1,6 @@
 # Tauri + 静态前端项目优化清单
 
-本文档总结 JsonNest项目在开发、CI/CD、安全、UI 等方面踩过的坑和最终方案，可直接复用到其他类似项目。
+本文档总结 JsonMate 项目在开发、CI/CD、安全、UI 等方面踩过的坑和最终方案，可直接复用到其他类似项目。
 
 ---
 
@@ -215,7 +215,7 @@ git push origin appstore
 **2. 创建 App ID**
 [Apple Developer Account](https://developer.apple.com/account) → Certificates, Identifiers & Profiles → Identifiers → +：
 - 类型：App
-- Bundle ID：`com.jsonnest.desktop.appstore`
+- Bundle ID：`com.jsonbeautify.desktop.appstore`
 
 **3. 创建分发证书**
 Certificates → + → Developer ID Application，用本地 Keychain Access 生成 CSR 上传，下载 `.cer` 安装。
@@ -227,7 +227,7 @@ Profiles → + → App Store，关联 App ID + 证书，下载后放入 `src-tau
 [appstoreconnect.apple.com](https://appstoreconnect.apple.com) → 我的 App → +：
 - 平台：macOS
 - Bundle ID：上面创建的
-- 名称："JsonNest"
+- 名称："JsonMate"
 
 #### 构建与上传
 
@@ -629,8 +629,8 @@ Provisioning profile "jsonnest-ios-appstore" has app ID
 **根因**：macOS 和 iOS 共用同一个 Apple Developer 账号，但 Bundle ID 必须区分。Bundle ID 改了之后，App Store Distribution Profile 没有同步重新生成。
 
 **方案**：
-- macOS App Store：`com.jsonnest.desktop.appstore`
-- iOS App Store：`com.jsonnest.desktop.appstore.ios`（加 `.ios` 后缀）
+- macOS App Store：`com.jsonbeautify.desktop.appstore`
+- iOS App Store：`com.jsonbeautify.desktop.appstore.ios`（加 `.ios` 后缀）
 - 每改一次 Bundle ID，必须到 Apple Developer 后台重新生成对应的 App Store Distribution Profile，并更新 GitHub Secret `IOS_PROVISIONING_PROFILE`。
 
 ### 7.6 GitHub PAT 权限
@@ -666,7 +666,7 @@ PAT 一旦在对话、日志、截图、commit message 中明文出现，视为�
 
 ```json
 {
-  "identifier": "com.jsonnest.desktop.appstore.ios",
+  "identifier": "com.jsonbeautify.desktop.appstore.ios",
   "bundle": {
     "icon": [
       "icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png",
@@ -931,7 +931,7 @@ import re, sys
     <string>app-store</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.jsonnest.desktop.appstore</key>
+        <key>com.jsonbeautify.desktop.appstore.ios</key>
         <string>jsonnest-ios-appstore</string>
     </dict>
     <key>teamID</key>
@@ -1079,7 +1079,7 @@ await icon.resize(192, 192).png().toFile('dist/icons/icon-192x192.png');
 ```javascript
 const I18N = {
     zh: {
-        title: 'JsonNest',
+        title: 'JsonMate',
         format: '格式化',
         formatSuccess: '格式化成功',
         // ...

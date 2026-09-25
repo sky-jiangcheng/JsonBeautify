@@ -58,3 +58,12 @@ Entries discovered by the Agent during task execution should follow this format:
   - 基于 v1.5.65 做的第一轮修复保留在 git stash（"v1.5.65-based fixes"）和 /tmp/opencode/backup-v1.5.65-fixes/，正式修复已移植到 main（v1.5.70 起）
   - 推送需用户 token（凭据助手 500 不可用）：写入 /root/.netrc（machine github.com login x-access-token password <token>，chmod 600），推完立即清除；清除用 `;` 而非 `&&` 连接——.netrc 只剩 github.com 一行时 `grep -v` 无输出、退出码 1，&& 链静默中断导致清理未执行（2026-09-19 教训）；用户 token 会轮换，旧 token 401 时直接要新的
   - 隐私政策页在 src/privacy.html（中英双语），经 build.js 进 dist/，Pages URL: https://sky-jiangcheng.github.io/JsonNest/privacy.html（注意 Pages 路径大小写敏感，必须用仓库实际大小写 JsonNest，README 里的旧小写链接已修），App Store 隐私政策 URL 字段引用它；docs/ 每次部署整目录重建，站内新增页面必须走 src→dist 链路
+
+[Project Knowledge Summary]
+- Date: 2026-09-25
+- Context: Discovered by Agent while renaming product to JsonMate; user corrected App Store Bundle IDs
+- Category: Operations & Deployment
+- Instructions:
+  - 产品展示名是 JsonMate（包名 jsonmate）；GitHub 仓库仍为 sky-jiangcheng/jsonnest，Pages 路径仍为 /JsonNest/
+  - Apple 锁死的 Bundle ID 是 jsonbeautify，不是 jsonnest：macOS App Store `com.jsonbeautify.desktop.appstore`，iOS App Store `com.jsonbeautify.desktop.appstore.ios`
+  - 对应文件：src-tauri/tauri.appstore.conf.json、src-tauri/tauri.ios.conf.json、src-tauri/Entitlements.plist（application-identifier 前缀 Team ID M3A6LK593A）、.github/workflows/release.yml 的 exportOptions.plist provisioningProfiles key

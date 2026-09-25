@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicedoc/nicedoc/master/web.json",
-  "productName": "JsonNest",
+  "productName": "JsonMate",
   "version": "1.5.51",
-  "identifier": "com.jsonnest.desktop",
+  "identifier": "com.jsonmate.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:8000",
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "JsonNest",
+        "title": "JsonMate",
         "width": 1200,
         "height": 800,
         "minWidth": 800,
@@ -45,6 +45,6 @@
     "createUpdaterArtifacts": false,
     "category": "Developer Tools",
     "shortDescription": "JSON 格式化与验证工具",
-    "longDescription": "JsonNest 支持 JSON 格式化、压缩、树形视图、内容对比和历史记录。适合开发者和日常 JSON 数据处理。"
+    "longDescription": "JsonMate 支持 JSON 格式化、压缩、树形视图、内容对比和历史记录。适合开发者和日常 JSON 数据处理。"
   }
 }
